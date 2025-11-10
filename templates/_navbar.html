@@ -1,0 +1,13 @@
+<nav class="bg-white border-bottom py-2">
+  <div class="container container-narrow d-flex align-items-center justify-content-between">
+    <a class="navbar-brand fw-bold text-decoration-none" href="/">🏥 HMS</a>
+    <div class="d-flex gap-3">
+      {% if current_user.is_authenticated %}
+        <span class="text-muted">Hi, {{ current_user.name }}</span>
+        <a class="text-decoration-none" href="{{ url_for('auth.logout') }}">Logout</a>
+      {% else %}
+        <a class="text-decoration-none" href="{{ url_for('auth.choose_role') }}">Login</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
