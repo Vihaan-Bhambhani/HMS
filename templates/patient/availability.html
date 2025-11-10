@@ -1,0 +1,26 @@
+{% extends "base.html" %}{% block content %}
+<h5 class="mb-3">{{ doc.name }} — {{ doc.department.name }}</h5>
+<div class="card p-3">
+  <table class="table table-sm">
+    <thead><tr><th>Date</th><th>Start</th><th>End</th><th></th></tr></thead>
+    <tbody>
+      {% for s in slots %}
+      <tr>
+        <td>{{ s.date }}</td>
+        <td>{{ s.start_time.strftime('%H:%M') }}</td>
+        <td>{{ s.end_time.strftime('%H:%M') }}</td>
+        <td>
+          <form method="post" action="{{ url_for('patient.book') }}">
+            <input type="hidden" name="doctor_id" value="{{ doc.id }}">
+            <input type="hidden" name="date" value="{{ s.date }}">
+            <input type="hidden" name="start_time" value="{{ s.start_time.strftime('%H:%M') }}">
+            <input type="hidden" name="end_time" value="{{ s.end_time.strftime('%H:%M') }}">
+            <button class="btn btn-sm btn-success">Book</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}<tr><td colspan="4" class="text-muted">No slots.</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
