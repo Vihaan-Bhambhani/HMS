@@ -1,0 +1,35 @@
+{% extends "base.html" %}{% block content %}
+<h4 class="mb-3">Doctor Dashboard</h4>
+<div class="card p-3 mb-3">
+  <h6>Upcoming</h6>
+  <table class="table table-sm">
+    <thead><tr><th>Date</th><th>Time</th><th>Patient</th><th></th></tr></thead>
+    <tbody>
+      {% for a in upcoming %}
+      <tr>
+        <td>{{ a.date }}</td>
+        <td>{{ a.start_time.strftime('%H:%M') }}–{{ a.end_time.strftime('%H:%M') }}</td>
+        <td>{{ a.patient.name }}</td>
+        <td><a class="btn btn-sm btn-primary" href="{{ url_for('doctor.complete_appointment', aid=a.id) }}">Complete</a></td>
+      </tr>
+      {% else %}<tr><td colspan="4" class="text-muted">No upcoming.</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="card p-3">
+  <h6>Recently Completed</h6>
+  <table class="table table-sm">
+    <thead><tr><th>Date</th><th>Patient</th><th>Diagnosis</th></tr></thead>
+    <tbody>
+      {% for a in completed %}
+      <tr>
+        <td>{{ a.date }}</td>
+        <td><a href="{{ url_for('doctor.patient_history', pid=a.patient_id) }}">{{ a.patient.name }}</a></td>
+        <td>{{ a.treatment.diagnosis if a.treatment else "-" }}</td>
+      </tr>
+      {% else %}<tr><td colspan="3" class="text-muted">No completed visits yet.</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
