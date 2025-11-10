@@ -1,0 +1,28 @@
+{% extends "base.html" %}{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4>Your Appointments</h4>
+  <a class="btn btn-primary" href="{{ url_for('patient.browse') }}"><i class="bi bi-search"></i> Find Doctor</a>
+</div>
+<div class="card p-3">
+  <table class="table table-sm">
+    <thead><tr><th>Date</th><th>Time</th><th>Doctor</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+      {% for a in aps %}
+      <tr>
+        <td>{{ a.date }}</td>
+        <td>{{ a.start_time.strftime('%H:%M') }}–{{ a.end_time.strftime('%H:%M') }}</td>
+        <td>{{ a.doctor.name }}</td>
+        <td>
+          <span class="badge {% if a.status=='Booked' %}bg-info{% elif a.status=='Completed' %}bg-success{% else %}bg-secondary{% endif %}">{{ a.status }}</span>
+        </td>
+        <td>
+          {% if a.status == 'Booked' %}
+            <a href="{{ url_for('patient.cancel', aid=a.id) }}" class="btn btn-sm btn-outline-danger">Cancel</a>
+          {% endif %}
+        </td>
+      </tr>
+      {% else %}<tr><td colspan="5" class="text-muted">No appointments yet.</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
