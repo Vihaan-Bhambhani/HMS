@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h4 class="mb-3">Patient Registration</h4>
+
+<div class="card p-4">
+  <form method="post">
+
+    <div class="mb-3">
+      <label class="form-label">Full Name</label>
+      <input type="text" name="name" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input type="email" name="email" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Password</label>
+      <input type="password" name="password" class="form-control" required>
+    </div>
+
+    <button class="btn btn-success w-100">Register</button>
+  </form>
+
+  <div class="text-center mt-3">
+    <a href="{{ url_for('auth.patient_login') }}">Already have an account? Login</a>
+  </div>
+</div>
+{% endblock %}
